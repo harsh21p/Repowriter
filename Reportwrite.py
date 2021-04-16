@@ -429,43 +429,44 @@ def main1():
         if val==1 :
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             try:create_rep1(site.split('\n')[0],dat,incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             try:create_poc(site.split('\n')[0],incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
-            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & POC.html\n"+bcolors.ENDC)
             incr=incr+1
         elif val==2 :
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             try:create_rep2(site.split('\n')[0],dat,incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
             print("Report Created.\n")
             try:create_poc2(site.split('\n')[0],incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
-            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & POC.html\n"+bcolors.ENDC)
             incr=incr+1
         elif val==3:
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             try:create_rep3(site.split('\n')[0],dat,incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             try:create_poc3(site.split('\n')[0],incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
-            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot\n"+bcolors.ENDC)
         elif val==4:
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             try:create_rep4(site.split('\n')[0],dat,incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             try:create_poc4(site.split('\n')[0],incr)
-            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
-            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); main()
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot\n"+bcolors.ENDC)
         elif val==5:
             sendmail()
         elif val==6:
                 exit()
         else:
             print(bcolors.FAIL+"I\nnvalid ! "+bcolors.ENDC)
+        main1()
 def main():
     banner()
     try:main1()

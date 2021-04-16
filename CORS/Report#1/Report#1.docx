@@ -1,0 +1,35 @@
+
+Harshad Pachore
+pachoreharshad21@gmail.com
+Date : 26-12-2000
+
+Vulnerability name: Bypassing CORS Misconfiguration Leads to Sensitive Exposure  
+Vulnerable Url: https://google.com
+It's possible to get information about the users registered (such as: id, name, login name, etc.) without authentication in Wordpress via API on  https://google.com
+
+By default Wordpress allow public access to Rest API to get informations about all users registered on the system. Platform(s) Affected: [website]  https://google.com
+Reference  :
+U. S. DOD : https://hackerone.com/reports/896093
+Impact
+1) It's possible to get all the users registered on the system and create a bruteforce directed to these users. 
+2) Cross Misconfiguration -Leakage Sensitive Information
+Steps to Reproduce
+1) Repreat URL Vulnerable to Burp Suite 
+2) If you add the Origin-parameter to the Request-header, the responsive header will reject 
+3) Bypassing Using Exploit CORS-With Sensitive 
+4) Open Request Vulnerability URL in /wp-json/` , when you open the url, you can see path-routes`` disclousure
+Proof On Concept:
+
+6) Open CORS.html file attached with report in browser , sensitive has been exposure
+
+POC Screenshots and html file attached :
+
+Suggested Mitigation/Remediation Actions
+
+There are 2 ways that it's possible to fix this problem. 
+FIX 1 - It's possible to remove this access for anyone by change the source code where when someone request the Rest API and the server send a 404 (Not Found) message for the user who made the request. Reference: https://github.com/WP-API/WP-API/issues/2338 
+FIX 2 - It's also possible to create a rewrite rule on .htaccess (if the webserver it's Apache) to redirect any request that contain restroute (eg.: "^.restroute=/wp/") to a Not Found (404) or a Default Page.
+
+POC Screenshot,HTML file attached.
+
+    
