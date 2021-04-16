@@ -11,7 +11,7 @@ from email import encoders
 
 __author__ = 'HARSHAD_PACHORE'
 def temp1():
-    print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Send mail" + bcolors.ENDC)
+    print(bcolors.BOLD + "\nChoice Email Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Exit \n 6] Back " + bcolors.ENDC)
     val1 = int(input(bcolors.OKCYAN +"\nEnter your choice : "+ bcolors.ENDC))
     return val1
 
@@ -41,8 +41,17 @@ def sendmail():
         val1=temp1()
 
         n=1
-
-        st=str(input(bcolors.OKCYAN+"Enter Report No. : "+bcolors.ENDC))
+        if val1<=6:
+            if val1==6:
+                main1()
+            elif val1==5:
+                exit()
+            else:
+                st=str(input(bcolors.OKCYAN+"Enter Report Nunmber : "+bcolors.ENDC))
+            
+        else:
+            print(bcolors.FAIL+"\nInvalid ! "+bcolors.ENDC)
+            continue
 
         while a<=n:
             if val1==1 :
@@ -81,11 +90,8 @@ def sendmail():
                 else:
                     filename="POC"
                     ext=".jpg"
-
-            else:
-                print(bcolors.FAIL+"Enter valid option"+bcolors.ENDC)
-                val1=temp1()
-
+            
+            
             
             filename =filename+st+ext
             path=path+st+"/"+filename
@@ -390,14 +396,8 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def main():
-    ''' Everything comes together '''
-	
-    try: sites = open(argv[1], 'r').readlines()
-    except: print("[*] Usage: python(3) clickjacking_tester.py <file_name>"); exit(0)
-    dat=str(argv[2])
-    if str(argv[3])=="-h":
-        print( bcolors.HEADER +"""\
+def banner():
+    print( bcolors.HEADER +"""\
 ____________________________________________________________________
  ____  _____ ____   ___  ____ _______        _____ ____ _____ _____ 
 |  _ \| ____|  _ \ / _ \|  _ \_   _\ \      / /_ _|  _ \_   _| ____|
@@ -410,7 +410,15 @@ ____________________________________________________________________
             THIS TOOL IS FOR BASIC VULNERAILITY SCANING """+bcolors.ENDC+ bcolors.HEADER + """
 ____________________________________________________________________ 
    """+ bcolors.ENDC)
-        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Send mail" + bcolors.ENDC)
+
+def main1():
+    ''' Everything comes together '''
+    try: sites = open(argv[1], 'r').readlines()
+    except: print("[*] Usage: python(3) clickjacking_tester.py <file_name>"); exit(0)
+    dat=str(argv[2])
+    if str(argv[3])=="-h":
+        
+        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Send mail \n 6] Exit \n"+ bcolors.ENDC)
         val = int(input(bcolors.OKCYAN +"\nEnter your choice : "+ bcolors.ENDC))
     else:
         val=int(argv[3])
@@ -420,35 +428,47 @@ ____________________________________________________________________
         
         if val==1 :
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
-            create_rep1(site.split('\n')[0],dat,incr)
+            try:create_rep1(site.split('\n')[0],dat,incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
-            create_poc(site.split('\n')[0],incr)
+            try:create_poc(site.split('\n')[0],incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
             incr=incr+1
         elif val==2 :
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
-            create_rep2(site.split('\n')[0],dat,incr)
+            try:create_rep2(site.split('\n')[0],dat,incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print("Report Created.\n")
-            create_poc2(site.split('\n')[0],incr)
+            try:create_poc2(site.split('\n')[0],incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & <URL>.html"+bcolors.ENDC)
             incr=incr+1
         elif val==3:
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
-            create_rep3(site.split('\n')[0],dat,incr)
+            try:create_rep3(site.split('\n')[0],dat,incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
-            create_poc3(site.split('\n')[0],incr)
+            try:create_poc3(site.split('\n')[0],incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
         elif val==4:
             print(bcolors.OKBLUE +"\n[*]Writing Report for "+ bcolors.ENDC + bcolors.OKGREEN + site + bcolors.ENDC)
-            create_rep4(site.split('\n')[0],dat,incr)
+            try:create_rep4(site.split('\n')[0],dat,incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
-            create_poc4(site.split('\n')[0],incr)
+            try:create_poc4(site.split('\n')[0],incr)
+            except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
             print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
         elif val==5:
             sendmail()
+        elif val==6:
+                exit()
         else:
-            print(bcolors.FAIL+"Enter valid option"+bcolors.ENDC)
-
-        
+            print(bcolors.FAIL+"I\nnvalid ! "+bcolors.ENDC)
+def main():
+    banner()
+    try:main1()
+    except: print(bcolors.FAIL+"\nSomething wents wrong !\n"+bcolors.ENDC); exit(0)
 		
 if __name__ == '__main__': main()
