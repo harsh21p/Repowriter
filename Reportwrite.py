@@ -2,14 +2,124 @@ from urllib.request import urlopen
 import requests
 from sys import argv, exit
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
 
 __author__ = 'HARSHAD_PACHORE'
+def temp1():
+    print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Send mail" + bcolors.ENDC)
+    val1 = int(input(bcolors.OKCYAN +"\nEnter your choice : "+ bcolors.ENDC))
+    return val1
+
+#send mail
+def sendmail():
+    msg = MIMEMultipart()
+    filename="Report#"
+    if str(argv[4])=="-n":
+        fromaddr = str(input(bcolors.OKCYAN+"\nEnter Senders email ID : "+bcolors.ENDC))
+        toaddr = str(input(bcolors.OKCYAN+"\nEnter Recivers email ID : "+bcolors.ENDC))
+        passw=str(input(bcolors.OKCYAN+"\nEnter Password : "+bcolors.ENDC))
+        name=str(input(bcolors.OKCYAN+"\nEnter Your Name : "+bcolors.ENDC))
+        #n=int(input(bcolors.OKCYAN+"\nHow many attachments yo want to add : "+bcolors.ENDC))
+        a=1
+    else:
+        fromaddr=str(argv[4])
+        toaddr=str(argv[5])
+        passw=str(argv[6])
+        name=str(argv[7])
+        a=1
+        #n=int(argv[8])
+
+
+        
+    while True:
+        
+        val1=temp1()
+
+        n=1
+
+        st=str(input(bcolors.OKCYAN+"Enter Report No. : "+bcolors.ENDC))
+
+        while a<=n:
+            if val1==1 :
+                n=2
+                path="./CLICLJ/Report#"
+                if a%2==0:
+                    filename="Report#"
+                    ext=".docx"
+                else:
+                    filename="POC"
+                    ext=".html"
+            elif val1==2 :
+                n=2
+                path="./CORS/Report#"
+                if a%2==0:
+                    filename="Report#"
+                    ext=".docx"
+                else:
+                    filename="POC"
+                    ext=".html"
+            elif val1==3:
+                n=2
+                path="./PHPINFO/Report#"
+                if a%2==0:
+                    filename="Report#"
+                    ext=".docx"
+                else:
+                    filename="POC"
+                    ext=".jpg"
+            elif val1==4:
+                n=2
+                path="./DirectoryListing/Report#"
+                if a%2==0:
+                    filename="Report#"
+                    ext=".docx"
+                else:
+                    filename="POC"
+                    ext=".jpg"
+
+            else:
+                print(bcolors.FAIL+"Enter valid option"+bcolors.ENDC)
+                val1=temp1()
+
+            
+            filename =filename+st+ext
+            path=path+st+"/"+filename
+            attachment = open(path, "rb")
+            p = MIMEBase('application', 'octet-stream')
+            p.set_payload((attachment).read())
+            encoders.encode_base64(p)
+            p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+            msg.attach(p)
+            a=a+1
+    
+        msg['From'] = fromaddr
+        msg['To'] = toaddr
+        msg['Subject'] = "Vulnerability Report"
+        body = "Hello,\nI am "+name+". I would like to report a security issue. Details are attached below \nRegards,\n"+name+"."
+        msg.attach(MIMEText(body, 'plain'))
+        a=1
+
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login(fromaddr, passw)
+        text = msg.as_string()
+        s.sendmail(fromaddr, toaddr, text)
+        print(bcolors.OKGREEN+"\nMail Sent.\n"+bcolors.ENDC)
+        s.quit()
+        
+
+
 #PHPINFO POC 
 def create_poc3(url,incr):
     BASE = 'https://render-tron.appspot.com/screenshot/'
     url1 = str(url)
     print(url1)
-    path = str(incr)+'POC.jpg'
+    path = 'POC'+str(incr)+'.jpg'
     save_path = './PHPINFO/Report#'+str(incr)
     completeName = os.path.join(save_path, path)
     response = requests.get(BASE + url1 + "/?width=1440&height=825", stream=True)
@@ -300,8 +410,8 @@ ____________________________________________________________________
             THIS TOOL IS FOR BASIC VULNERAILITY SCANING """+bcolors.ENDC+ bcolors.HEADER + """
 ____________________________________________________________________ 
    """+ bcolors.ENDC)
-        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n" + bcolors.ENDC)
-        val = int(input(bcolors.OKCYAN +"Enter your choice : "+ bcolors.ENDC))
+        print(bcolors.BOLD + "\nChoice Report Templet : \n\n 1] Clickjaking Report \n 2] CORS Report \n 3] PHPINFO Page \n 4] Directory listing \n 5] Send mail" + bcolors.ENDC)
+        val = int(input(bcolors.OKCYAN +"\nEnter your choice : "+ bcolors.ENDC))
     else:
         val=int(argv[3])
     incr = 1
@@ -334,6 +444,8 @@ ____________________________________________________________________
             print(bcolors.HEADER +"Report Created.\n"+bcolors.ENDC)
             create_poc4(site.split('\n')[0],incr)
             print(bcolors.OKCYAN+" [*] Created a Report & POC and saved to Report.docx & Screenshot"+bcolors.ENDC)
+        elif val==5:
+            sendmail()
         else:
             print(bcolors.FAIL+"Enter valid option"+bcolors.ENDC)
 
